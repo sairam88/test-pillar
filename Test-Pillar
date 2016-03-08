@@ -19,7 +19,7 @@
             "ConfigurationTemplates":[
                {
                   "TemplateName":"DefaultConfiguration",
-                  "SolutionStackName":"64bit Amazon Linux 2015.09 v2.0.8 running Tomcat 8 Java 8",
+                  "SolutionStackName":"64bit Amazon Linux 2015.09 v2.0.8 running Tomcat 7 Java 7",
                   "OptionSettings":[
                       {
                         "Namespace":"aws:elasticbeanstalk:environment",
@@ -40,6 +40,11 @@
                         "Namespace":"aws:autoscaling:asg",
                         "OptionName":"MaxSize",
                         "Value":"2"
+                      },
+                      {
+                        "Namespace":"aws:autoscaling:asg",
+                        "OptionName":"Cooldown",
+                        "Value":"120"
                       },
                       {
                         "Namespace" : "aws:autoscaling:launchconfiguration",
@@ -200,7 +205,7 @@
             },
             "EnvironmentName":"Pillar-Test",
             "CNAMEPrefix":"test-pillar",
-            "TemplateName":"DefaultConfiguration",
+            "TemplateName":"InitialTemplate",
             "VersionLabel":"Version 1.0.0",
             "Tags": [
                   {"Key": "ENVIRONMENT", "Value": "Pillar-Test"}
