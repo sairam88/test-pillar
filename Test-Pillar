@@ -1,0 +1,229 @@
+{
+   "AWSTemplateFormatVersion":"2010-09-09",
+   "Description": "Pillar-Test Web-Application stack",
+   "Resources":{
+      "app":{
+         "Type":"AWS::ElasticBeanstalk::Application",
+         "Properties":{
+            "Description": "Pillar-Test Web Application",
+            "ApplicationName": "Pillar-Test",
+            "ApplicationVersions":[
+               {
+                  "VersionLabel":"Version 1.0.0",
+                  "SourceBundle":{
+                     "S3Bucket":"test-pillar",
+                     "S3Key":"java-tomcat-v1.zip"
+                  }
+               }
+            ],
+            "ConfigurationTemplates":[
+               {
+                  "TemplateName":"DefaultConfiguration",
+                  "SolutionStackName":"64bit Amazon Linux 2015.09 v2.0.8 running Tomcat 8 Java 8",
+                  "OptionSettings":[
+                      {
+                        "Namespace":"aws:elasticbeanstalk:environment",
+                        "OptionName":"EnvironmentType",
+                        "Value":"LoadBalanced"
+                      },
+                      {
+                        "Namespace":"aws:autoscaling:launchconfiguration",
+                        "OptionName":"InstanceType",
+                        "Value":"t2.micro"
+                      },
+                      {
+                        "Namespace":"aws:autoscaling:asg",
+                        "OptionName":"MinSize",
+                        "Value":"1"
+                      },
+                      {
+                        "Namespace":"aws:autoscaling:asg",
+                        "OptionName":"MaxSize",
+                        "Value":"2"
+                      },
+                      {
+                        "Namespace" : "aws:autoscaling:launchconfiguration",
+                        "OptionName" : "EC2KeyName",
+                        "Value" : "pillar-test"
+                      },
+                      {
+                        "Namespace": "aws:ec2:vpc",
+                        "OptionName": "VPCId",
+                        "Value": "vpc-067e2b62"
+                      },
+                      {
+                        "Namespace": "aws:ec2:vpc",
+                        "OptionName": "Subnets",
+                        "Value": "subnet-af07d7f7,subnet-445a3f79"
+                      },
+                      {
+                        "Namespace": "aws:ec2:vpc",
+                        "OptionName": "ELBSubnets",
+                        "Value": "subnet-af07d7f7,subnet-445a3f79"
+                      },
+                      {
+                        "Namespace": "aws:elasticbeanstalk:container:tomcat:jvmoptions",
+                        "OptionName": "Xmx",
+                        "Value": "512m"
+                      },
+                      {
+                        "Namespace": "aws:elasticbeanstalk:container:tomcat:jvmoptions",
+                        "OptionName": "XX:MaxPermSize",
+                        "Value": "128m"
+                      },
+                      {
+                        "Namespace": "aws:elasticbeanstalk:container:tomcat:jvmoptions",
+                        "OptionName": "Xms",
+                        "Value": "512m"
+                      },
+                      {
+                        "Namespace": "aws:elasticbeanstalk:environment",
+                        "OptionName": "ServiceRole",
+                        "Value": "aws-elasticbeanstalk-service-role"
+                      },
+                      {
+                        "Namespace": "aws:autoscaling:launchconfiguration",
+                        "OptionName": "IamInstanceProfile",
+                        "Value": "Pillar-Test"
+                      },
+                      {
+                        "Namespace": "aws:elasticbeanstalk:healthreporting:system",
+                        "OptionName": "SystemType",
+                        "Value": "enhanced"
+                      },
+                      {
+                        "OptionName": "RootVolumeSize",
+                        "ResourceName": "AWSEBAutoScalingLaunchConfiguration",
+                        "Namespace": "aws:autoscaling:launchconfiguration",
+                        "Value": "10"
+                      },
+                      {
+                        "OptionName": "RootVolumeType",
+                        "ResourceName": "AWSEBAutoScalingLaunchConfiguration",
+                        "Namespace": "aws:autoscaling:launchconfiguration",
+                        "Value": "gp2"
+                      },
+                      {
+                        "OptionName": "RollingUpdateEnabled",
+                        "ResourceName": "AWSEBAutoScalingGroup",
+                        "Namespace": "aws:autoscaling:updatepolicy:rollingupdate",
+                        "Value": "true"
+                      },
+                      {
+                        "OptionName": "RollingUpdateType",
+                        "ResourceName": "AWSEBAutoScalingGroup",
+                        "Namespace": "aws:autoscaling:updatepolicy:rollingupdate",
+                        "Value": "Health"
+                      },
+                      {
+                        "OptionName": "InstancePort",
+                        "ResourceName": "AWSEBLoadBalancer",
+                        "Namespace": "aws:elb:listener:80",
+                        "Value": "8080"
+                      },
+                      {
+                        "Namespace": "aws:elasticbeanstalk:application",
+                        "OptionName": "Application Healthcheck URL",
+                        "Value": "TCP:8080"
+                      },
+                      {
+                        "OptionName": "CrossZone",
+                        "ResourceName": "AWSEBLoadBalancer",
+                        "Namespace": "aws:elb:loadbalancer",
+                        "Value": "true"
+                      },
+                      {
+                        "OptionName": "InstanceProtocol",
+                        "ResourceName": "AWSEBLoadBalancer",
+                        "Namespace": "aws:elb:listener:80",
+                        "Value": "HTTP"
+                      },
+                      {
+                        "OptionName": "ListenerEnabled",
+                        "ResourceName": "AWSEBLoadBalancer",
+                        "Namespace": "aws:elb:listener:80",
+                        "Value": "true"
+                      },
+                      {
+                        "OptionName": "ListenerProtocol",
+                        "ResourceName": "AWSEBLoadBalancer",
+                        "Namespace": "aws:elb:listener:80",
+                        "Value": "HTTP"
+                      },
+                      {
+                        "OptionName": "ConnectionDrainingEnabled",
+                        "ResourceName": "AWSEBLoadBalancer",
+                        "Namespace": "aws:elb:policies",
+                        "Value": "true"
+                      },
+                      {
+                        "Namespace":"aws:elb:loadbalancer",
+                        "OptionName":"LoadBalancerHTTPPort",
+                        "Value":"80"
+                     },
+                      {
+                        "Namespace":"aws:elb:loadbalancer",
+                        "OptionName":"LoadBalancerPortProtocol",
+                        "Value":"HTTP"
+                     },
+                      {
+                        "Namespace": "aws:autoscaling:trigger",
+                        "OptionName": "MeasureName",
+                        "Value": "CPUUtilization"
+                     },
+                      {
+                        "Namespace": "aws:autoscaling:trigger",
+                        "OptionName": "Unit",
+                        "Value": "Percent"
+                     },
+                      {
+                        "Namespace": "aws:autoscaling:trigger",
+                        "OptionName": "UpperThreshold",
+                        "Value": "80"
+                     },
+                      {
+                        "Namespace": "aws:autoscaling:trigger",
+                        "OptionName": "LowerThreshold",
+                        "Value": "40"
+                     }
+                  ]
+               }
+            ]
+         }
+      },
+      "env":{
+         "Type":"AWS::ElasticBeanstalk::Environment",
+         "Properties":{
+            "Description": "Pillar-Test environment",
+            "ApplicationName":{
+               "Ref":"app"
+            },
+            "EnvironmentName":"Pillar-Test",
+            "CNAMEPrefix":"test-pillar",
+            "TemplateName":"DefaultConfiguration",
+            "VersionLabel":"Version 1.0.0",
+            "Tags": [
+                  {"Key": "ENVIRONMENT", "Value": "Pillar-Test"}
+        ]
+         }
+      }
+   },
+   "Outputs":{
+      "ApplicationURL":{
+         "Value":{
+            "Fn::Join":[
+               "",
+               [
+                  "http://",
+                  {
+                     "Fn::GetAtt":[
+                        "env",
+                        "EndpointURL"
+                     ]
+                  }
+               ]
+            ]
+         }
+      }
+   }
+}
