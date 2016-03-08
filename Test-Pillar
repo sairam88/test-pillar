@@ -47,6 +47,11 @@
                         "Value":"2"
                       },
                       {
+                        "Namespace":"aws:autoscaling:updatepolicy:rollingupdate",
+                        "OptionName":"MinInstancesInService",
+                        "Value":"1"
+                      },
+                      {
                         "Namespace":"aws:autoscaling:asg",
                         "OptionName":"Cooldown",
                         "Value":"120"
