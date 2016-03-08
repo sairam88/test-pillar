@@ -77,6 +77,11 @@
                         "Value": "subnet-af07d7f7,subnet-445a3f79"
                       },
                       {
+                        "Namespace": "aws:ec2:vpc",
+                        "OptionName": "AssociatePublicIpAddress",
+                        "Value": "true"
+                      },
+                      {
                         "Namespace": "aws:elasticbeanstalk:container:tomcat:jvmoptions",
                         "OptionName": "Xmx",
                         "Value": "512m"
